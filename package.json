@@ -1,12 +1,11 @@
 {
-  "name": "sprint-14",
+  "name": "news-explorer-api",
   "version": "1.0.0",
-  "description": "Study server with express.js",
+  "description": "Diploma",
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
-    "start": "node app.js",
-    "test": "jest"
+    "start": "node app.js"
   },
   "author": "Svyat",
   "license": "ISC",
