@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const usersRoute = require('./routes/users');
-const cardsRoute = require('./routes/cards');
+const articlesRoute = require('./routes/articles');
 const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-err');
@@ -31,19 +31,11 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 app.use(requestLogger);
 
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
-
 app.post('/signup', celebrate({
   body: Joi.object().keys({
     password: Joi.string().required().min(8),
     email: Joi.string().email().required(),
     name: Joi.string().min(2).max(30).required(),
-    avatar: Joi.string().uri().required(),
-    about: Joi.string().min(2).max(30).required(),
   }),
 }), createUser);
 
@@ -57,7 +49,7 @@ app.post('/signin', celebrate({
 app.use(auth);
 
 app.use('/users', usersRoute);
-app.use('/cards', cardsRoute);
+app.use('/articles', articlesRoute);
 app.use('*', (req, res, next) => {
   next(new NotFoundError('Ресурс не найден'));
 });

@@ -1,4 +1,4 @@
-const caarticlesrds = require('express').Router();
+const articles = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 const {
   createArticle, getAllArticles, deleteArticle,
