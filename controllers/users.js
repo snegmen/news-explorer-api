@@ -45,7 +45,7 @@ module.exports.getSingleUser = (req, res, next) => {
   User.findById(req.params.id)
     .then((user) => {
       if (!user) throw Error;
-      res.send(user);
+      res.send({ user: user.name, email: user.email });
     })
     .catch(() => next(new NotFoundError('Такого пользователя не существует')));
 };

@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect('mongodb://localhost:27017/newsyp', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
