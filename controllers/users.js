@@ -27,7 +27,7 @@ module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, process.env.NODE_ENV === 'production' ? process.env.JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, process.env.NODE_ENV === 'production' ? process.env.SECRET_KEY : 'dev-secret', { expiresIn: '7d' });
       res.status(201).cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
@@ -41,11 +41,11 @@ module.exports.login = (req, res, next) => {
     });
 };
 
-module.exports.getSingleUser = (req, res, next) => {
-  User.findById(req.params.id)
+module.exports.getUser = (req, res, next) => {
+  User.findById(req.user._id)
     .then((user) => {
-      if (!user) throw Error;
+      if (!user) throw Error
       res.send({ user: user.name, email: user.email });
     })
-    .catch(() => next(new NotFoundError('Такого пользователя не существует')));
+    .catch(() => next(new NotFoundError('Нет такого пользователя')));
 };

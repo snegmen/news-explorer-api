@@ -28,7 +28,7 @@ module.exports.deleteArticle = (req, res, next) => {
         notArticleOwner.statusCode = 403;
         throw notArticleOwner;
       }
-      Article.delArt(article)
+      Article.deleteOne(article)
         .then(() => res.send(article))
         .catch(() => { throw new Error500('Ошибка при удалении статьи'); });
     })
