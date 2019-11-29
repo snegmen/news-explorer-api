@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const { celebrate, Joi, errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
@@ -15,6 +16,7 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
+app.use(cors());
 app.use(helmet());
 
 app.use(express.json());
@@ -61,7 +63,7 @@ app.use(errors());
 app.use((err, req, res, next) => {
   res.status(err.statusCode ? err.statusCode : 500)
     .send({ message: err.message });
-    next();
+  next();
 });
 
 app.listen(PORT, () => {
