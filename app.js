@@ -8,7 +8,7 @@ const helmet = require('helmet');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const usersRoute = require('./routes/users');
 const articlesRoute = require('./routes/articles');
-const { createUser, login } = require('./controllers/users');
+const { createUser, login, logout } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-err');
 
@@ -47,6 +47,8 @@ app.post('/signin', celebrate({
     password: Joi.string().required().min(8),
   }),
 }), login);
+
+app.post('/logout', logout);
 
 app.use(auth);
 

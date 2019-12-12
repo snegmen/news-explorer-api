@@ -31,8 +31,8 @@ module.exports.login = (req, res, next) => {
       res.status(201).cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
-        sameSite: true,
-      }).send({ message: 'Ок' });
+        sameSite: false,
+      }).send({ login: true });
     })
     .catch((e) => {
       const err = new Error(e.message);
@@ -40,6 +40,15 @@ module.exports.login = (req, res, next) => {
       next(err);
     });
 };
+
+// eslint-disable-next-line no-unused-vars
+module.exports.logout = (req, res, next) => res
+  .status(201)
+  .cookie('jwt', '', {
+    maxAge: 0,
+    httpOnly: true,
+    sameSite: false,
+  }).send({ login: false });
 
 module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
